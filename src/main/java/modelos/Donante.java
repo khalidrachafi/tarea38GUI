@@ -29,7 +29,7 @@ import javax.annotation.processing.Generated;
 public class Donante {
 
 @JsonProperty("id_paciente")
-private Integer idPaciente;
+private String idPaciente;
 @JsonProperty("nombre")
 private String nombre;
 @JsonProperty("fechaNacimiento")
@@ -59,7 +59,7 @@ public Donante() {
 * @param numeroDonaciones
 * @param nombre
 */
-public Donante(Integer idPaciente, String nombre, String fechaNacimiento, String grupoSanguineo, String rh, Integer numeroDonaciones) {
+public Donante(String idPaciente, String nombre, String fechaNacimiento, String grupoSanguineo, String rh, Integer numeroDonaciones) {
 super();
 this.idPaciente = idPaciente;
 this.nombre = nombre;
@@ -70,16 +70,16 @@ this.numeroDonaciones = numeroDonaciones;
 }
 
 @JsonProperty("id_paciente")
-public Integer getIdPaciente() {
+public String getIdPaciente() {
 return idPaciente;
 }
 
 @JsonProperty("id_paciente")
-public void setIdPaciente(Integer idPaciente) {
+public void setIdPaciente(String idPaciente) {
 this.idPaciente = idPaciente;
 }
 
-public Donante withIdPaciente(Integer idPaciente) {
+public Donante withIdPaciente(String idPaciente) {
 this.idPaciente = idPaciente;
 return this;
 }
@@ -105,8 +105,11 @@ return LocalDate.parse(this.fechaNacimiento,DateTimeFormatter.ofPattern("MM/dd/u
 }
 
 @JsonProperty("fechaNacimiento")
-public void setFechaNacimiento(String fechaNacimiento) {
-this.fechaNacimiento = fechaNacimiento;
+public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    // Convertir la fecha al formato MM/dd/uuuu
+    String fechaFormateada = fechaNacimiento.format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+    // Asignar la fecha formateada como un String
+    this.fechaNacimiento = fechaFormateada;
 }
 
 public Donante withFechaNacimiento(String fechaNacimiento) {
@@ -151,7 +154,7 @@ return numeroDonaciones;
 
 @JsonProperty("numeroDonaciones")
 public void setNumeroDonaciones(Integer numeroDonaciones) {
-this.numeroDonaciones = numeroDonaciones;
+ this.numeroDonaciones = numeroDonaciones;
 }
 
 public Donante withNumeroDonaciones(Integer numeroDonaciones) {

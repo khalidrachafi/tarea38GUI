@@ -5,6 +5,7 @@
 package vistas;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import modelos.ModeloTablaDonante;
 import modelos.ListaDonantes;
 
@@ -58,6 +59,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }
     
+    
+    // Método para obtener la lista de personas cargada en el formulario
+    // desde el diálogo
+    public ListaDonantes getListaDonantes() {
+        return this.listaDonantes;
+    }
+
+    // Método para obtener el jtable del formulario
+    // desde el diálogo
+    public JTable getJTable() {
+        return this.jTable1;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

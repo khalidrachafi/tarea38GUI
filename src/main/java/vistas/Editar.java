@@ -4,23 +4,72 @@
  */
 package vistas;
 
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JTable;
+import modelos.Donante;
+
 /**
  *
  * @author krach
  */
 public class Editar extends javax.swing.JDialog {
 
-    /**
-     * Creates new form Editar
-     */
-    public Editar(java.awt.Frame parent, boolean modal) {
+    private VentanaPrincipal padre;
+    private Donante donante;
+
+    public Editar(VentanaPrincipal parent, boolean modal) {
+
         super(parent, modal);
+        padre = parent;
         initComponents();
+        mostrarDatosEditar();
     }
-    
-    
-    
-    
+
+    // Este método privado permite cargar los datos en los componentes
+    // de este jdialog del registro seleccionado en el jtable de la ventana
+    private void mostrarDatosEditar() {
+        // Obtengo el id de la persona seleccionada
+        // Para ello, obtengo la fila seleccionada y luego el id de esa fila
+        int fila = filaSeleccionadaJTable(padre.getJTable());
+        // El id de la persona es el valor de la columna cero de esa fila
+        String idPaciente = (String) padre.getJTable().getValueAt(fila, 0);
+        String idPersona = (String) padre.getJTable().getValueAt(fila, 0);
+        
+        // Guarda la persona seleccionada
+        this.donante = padre.getListaDonantes().getDonante(idPaciente);
+        // Muestra datos de la persona que se seleccionó en el jtable
+        // en los jtextfield
+        idtxt.setText(this.donante.getIdPaciente());
+        idtxt.setEditable(false); // No editable
+        idtxt.setBackground(Color.GRAY);
+        nombretxt.setText(this.donante.getNombre());
+        
+        // Obtener la fecha de nacimiento del donante
+        LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
+        // Convertir la fecha de nacimiento a un String con el formato dia/mes/año dado que es el dato que mostraremos
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String fechaNacimientoTexto = fechaNacimiento.format(formatter);
+        // Establecer el texto en el JTextField
+        fechatxt.setText(fechaNacimientoTexto);
+        grupotxt.setText(this.donante.getGrupoSanguineo());
+        rhtxt.setText(this.donante.getRh());
+        
+        // Obtener el número de donaciones del donante
+        int numeroDonaciones = this.donante.getNumeroDonaciones();
+        // Convertir el entero a un String
+        String numeroDonacionesTexto = String.valueOf(numeroDonaciones);
+        // Establecer el texto ya siendo un Strnig
+        donacionestxt.setText(numeroDonacionesTexto);
+
+    }
+
+    // Este método permite obtener la fila seleccionada en el JTable
+    private int filaSeleccionadaJTable(JTable jTable1) {
+        int fila = jTable1.getSelectedRow();
+        return fila;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,8 +108,18 @@ public class Editar extends javax.swing.JDialog {
         rhLab.setText("Rh");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         donacionesLab.setText("Numero donaciones");
 
@@ -131,47 +190,81 @@ public class Editar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        // Guardo en la persona seleccionada los cambios de los jtextfield
+        this.donante.setNombre(nombretxt.getText());
+        String fechaTexto = fechatxt.getText();
+        // Pasar el contenido del JTextField como un String
+        // Convertir el String en un objeto LocalDate
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        LocalDate fechaNacimiento = LocalDate.parse(fechaTexto, formatter);
+        this.donante.setFechaNacimiento(fechaNacimiento);
+        this.donante.setGrupoSanguineo(grupotxt.getText());
+        this.donante.setRh(rhtxt.getText());
+        String numeroDonacionesTexto = donacionestxt.getText();
+        // Convertir el String en un Integer
+        try {
+            Integer numeroDonaciones = Integer.parseInt(numeroDonacionesTexto);
+            // Pasar el Integer al método setNumeroDonaciones
+            this.donante.setNumeroDonaciones(numeroDonaciones);
+        } catch (NumberFormatException e) {
+            // Manejar el caso en el que la cadena no se pueda convertir a un Integer
+            System.err.println("Error: No es un número entero válido.");
+        }
+        // En este punto también se podrían guardar los cambios en un 
+        // fichero o en una BD
+
+        // Cierro el dialogo
+        this.dispose();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Editar dialog = new Editar(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Editar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                Editar dialog = new Editar(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
