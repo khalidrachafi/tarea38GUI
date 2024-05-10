@@ -9,11 +9,9 @@ import java.util.ArrayList;
 
 public class ListaDonantes {
     
-    private ArrayList<Donante> listaDonantes;
+    private static ArrayList<Donante> listaDonantes;
 
     public ListaDonantes() {
-        listaDonantes = new ArrayList<>();
-
     }
     
     public ArrayList<Donante> getLista(){
@@ -30,7 +28,7 @@ public class ListaDonantes {
         ObjectMapper mapeador = new ObjectMapper();
         mapeador.registerModule(new JavaTimeModule());
         
-        ArrayList<Donante> listaDonantes = mapeador.readValue(new File("donantes.json"),
+        listaDonantes = mapeador.readValue(new File("donantes.json"),
                     mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
         System.out.println("---- Donantes ----");
         for (Donante listaDonante : listaDonantes) {
