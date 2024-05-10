@@ -1,4 +1,3 @@
-
 package modelos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,32 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaDonantes {
-    
+
     private static ArrayList<Donante> listaDonantes;
 
     public ListaDonantes() throws IOException {
-        try{
+        try {
             listaDonantes = (ArrayList<Donante>) LeerJSon();
-        }catch(FileSystemException ex){
+        } catch (FileSystemException ex) {
             System.out.println("Error leyendo el archivo");
         }
     }
-    
-    
-    public ArrayList<Donante> getLista(){
+
+    public ArrayList<Donante> getLista() {
         return listaDonantes;
     }
-    
-    
+
     public Donante getDonante(String id) {
         System.out.println("id buscado " + id);
         return listaDonantes.stream()
                 .filter(p -> p.getIdPaciente().equals(id))
                 .findFirst()
-                .orElse(null); 
+                .orElse(null);
     }
 
-      
 //    public static void LeerJSon() throws IOException {
 //        ObjectMapper mapeador = new ObjectMapper();
 //        mapeador.registerModule(new JavaTimeModule());
@@ -51,18 +47,14 @@ public class ListaDonantes {
 //            System.out.println(donante);
 //        }
 //    }
-    
-    
     public static List<Donante> LeerJSon() throws IOException {
         ObjectMapper mapeador = new ObjectMapper();
 
         listaDonantes = mapeador.readValue(new File("donantes.json"),
                 mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
-        
-        
-        
+
         // Devolver solo los primeros 25 registros
         return listaDonantes.subList(0, Math.min(25, listaDonantes.size()));
     }
-    
+
 }

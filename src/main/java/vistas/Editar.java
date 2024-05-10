@@ -36,7 +36,7 @@ public class Editar extends javax.swing.JDialog {
         // El id de la persona es el valor de la columna cero de esa fila
         String idPaciente = (String) padre.getJTable().getValueAt(fila, 0);
         String idPersona = (String) padre.getJTable().getValueAt(fila, 0);
-        
+
         // Guarda la persona seleccionada
         this.donante = padre.getListaDonantes().getDonante(idPaciente);
         // Muestra datos de la persona que se seleccionó en el jtable
@@ -45,7 +45,7 @@ public class Editar extends javax.swing.JDialog {
         idtxt.setEditable(false); // No editable
         idtxt.setBackground(Color.GRAY);
         nombretxt.setText(this.donante.getNombre());
-        
+
         // Obtener la fecha de nacimiento del donante
         LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
         // Convertir la fecha de nacimiento a un String con el formato dia/mes/año dado que es el dato que mostraremos
@@ -55,7 +55,7 @@ public class Editar extends javax.swing.JDialog {
         fechatxt.setText(fechaNacimientoTexto);
         grupotxt.setText(this.donante.getGrupoSanguineo());
         rhtxt.setText(this.donante.getRh());
-        
+
         // Obtener el número de donaciones del donante
         int numeroDonaciones = this.donante.getNumeroDonaciones();
         // Convertir el entero a un String

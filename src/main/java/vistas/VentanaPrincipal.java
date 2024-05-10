@@ -22,7 +22,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     private ListaDonantes listaDonantes;
-    
+
     public VentanaPrincipal() throws IOException {
         // Se carga la lista
         listaDonantes = new ListaDonantes();
@@ -30,10 +30,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Se cargan los datos en el JTable
         cargarDatosJTable();
     }
-    
-    
-    
-     // Este método inserta los datos de la lista en el jtable
+
+    // Este método inserta los datos de la lista en el jtable
     private void cargarDatosJTable() {
 
         // Se crea el modelo de datos que contendrá el JTable
@@ -61,8 +59,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jTable1.setModel(modelo);
 
     }
-    
-    
+
     // Método para obtener la lista de personas cargada en el formulario
     // desde el diálogo
     public ListaDonantes getListaDonantes() {
@@ -74,7 +71,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public JTable getJTable() {
         return this.jTable1;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,7 +164,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             // Una vez termine la ejecución de la ventana Editar
             // Llamo a cargar de nuevo los datos en el jTable con los cambios
             cargarDatosJTable();
-        } 
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
