@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelos.ModeloTablaDonante;
@@ -20,7 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     private ListaDonantes listaDonantes;
     
-    public VentanaPrincipal() {
+    public VentanaPrincipal() throws IOException {
         // Se carga la lista
         listaDonantes = new ListaDonantes();
         initComponents();
@@ -202,7 +205,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                try {
+                    new VentanaPrincipal().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
