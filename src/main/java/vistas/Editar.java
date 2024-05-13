@@ -5,6 +5,7 @@
 package vistas;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JTable;
@@ -19,7 +20,7 @@ public class Editar extends javax.swing.JDialog {
     private VentanaPrincipal padre;
     private Donante donante;
 
-    public Editar(VentanaPrincipal parent, boolean modal) {
+    public Editar(VentanaPrincipal parent, boolean modal) throws IOException {
 
         super(parent, modal);
         padre = parent;
@@ -29,16 +30,15 @@ public class Editar extends javax.swing.JDialog {
 
     // Este método privado permite cargar los datos en los componentes
     // de este jdialog del registro seleccionado en el jtable de la ventana
-    private void mostrarDatosEditar() {
+    private void mostrarDatosEditar() throws IOException {
         // Obtengo el id de la persona seleccionada
         // Para ello, obtengo la fila seleccionada y luego el id de esa fila
         int fila = filaSeleccionadaJTable(padre.getJTable());
         // El id de la persona es el valor de la columna cero de esa fila
-        String idPaciente = (String) padre.getJTable().getValueAt(fila, 0);
-        String idPersona = (String) padre.getJTable().getValueAt(fila, 0);
+        String idDonante = (String) padre.getJTable().getValueAt(fila, 0);
 
         // Guarda la persona seleccionada
-        this.donante = padre.getListaDonantes().getDonante(idPaciente);
+        this.donante = padre.getListaDonantes().getDonante(idDonante);
         // Muestra datos de la persona que se seleccionó en el jtable
         // en los jtextfield
         idtxt.setText(this.donante.getIdPaciente());
@@ -47,12 +47,12 @@ public class Editar extends javax.swing.JDialog {
         nombretxt.setText(this.donante.getNombre());
 
         // Obtener la fecha de nacimiento del donante
-        LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
+        //LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
         // Convertir la fecha de nacimiento a un String con el formato dia/mes/año dado que es el dato que mostraremos
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-        String fechaNacimientoTexto = fechaNacimiento.format(formatter);
+       // String fechaNacimientoTexto = fechaNacimiento.format(formatter);
         // Establecer el texto en el JTextField
-        fechatxt.setText(fechaNacimientoTexto);
+       // fechatxt.setText(fechaNacimientoTexto);
         grupotxt.setText(this.donante.getGrupoSanguineo());
         rhtxt.setText(this.donante.getRh());
 
@@ -204,7 +204,7 @@ public class Editar extends javax.swing.JDialog {
         // Convertir el String en un objeto LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
         LocalDate fechaNacimiento = LocalDate.parse(fechaTexto, formatter);
-        this.donante.setFechaNacimiento(fechaNacimiento);
+       // this.donante.setFechaNacimiento(fechaNacimiento);
         this.donante.setGrupoSanguineo(grupotxt.getText());
         this.donante.setRh(rhtxt.getText());
         String numeroDonacionesTexto = donacionestxt.getText();
@@ -214,8 +214,8 @@ public class Editar extends javax.swing.JDialog {
             // Pasar el Integer al método setNumeroDonaciones
             this.donante.setNumeroDonaciones(numeroDonaciones);
         } catch (NumberFormatException e) {
-            // Manejar el caso en el que la cadena no se pueda convertir a un Integer
-            System.err.println("Error: No es un número entero válido.");
+            // Manejar el caso en el que el String no se pueda convertir a un Integer
+            System.out.println("Error: No es un número entero válido.");
         }
         // En este punto también se podrían guardar los cambios en un 
         // fichero o en una BD

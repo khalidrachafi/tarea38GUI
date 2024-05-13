@@ -9,7 +9,7 @@ public class ModeloTablaDonante extends DefaultTableModel {
     public ModeloTablaDonante() {
         // Se asignan los nombres de las columnas de la tabla
         // en función de los atributos que tiene la persona
-        String[] columnNames = {"ID", "NOMBRE", "FECHA NACIMIENTO", "GRUPO ANGUINEO", "RH", "NUMERO DONACIONES"};
+        String[] columnNames = {"ID", "NOMBRE", "FECHA NACIMIENTO", "GRUPO SANGUINEO", "RH", "NUMERO DONACIONES"};
 
         // Se le indica al modelo el nombre de las columnas y cantidad
         this.setColumnIdentifiers(columnNames);
@@ -21,7 +21,7 @@ public class ModeloTablaDonante extends DefaultTableModel {
         // Aquí devolvemos true o false según queramos que una celda
         // identificada por fila,columna (row,column), sea o no editable
         // En nuestro caso ninguna celda se edita
-        return true;
+        return false;
     }
 
 }

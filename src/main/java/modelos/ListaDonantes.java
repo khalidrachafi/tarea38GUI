@@ -10,13 +10,13 @@ import java.util.List;
 
 public class ListaDonantes {
 
-    private static ArrayList<Donante> listaDonantes;
+    private  ArrayList<Donante> listaDonantes;
 
     public ListaDonantes() throws IOException {
         try {
-            listaDonantes = (ArrayList<Donante>) LeerJSon();
+            listaDonantes = leerJSon();
         } catch (FileSystemException ex) {
-            System.out.println("Error leyendo el archivo");
+            System.out.println("Error leyendo el archivo" + ex.getMessage());
         }
     }
 
@@ -29,7 +29,7 @@ public class ListaDonantes {
         return listaDonantes.stream()
                 .filter(p -> p.getIdPaciente().equals(id))
                 .findFirst()
-                .orElse(null);
+                .get();
     }
 
 //    public static void LeerJSon() throws IOException {
@@ -47,14 +47,33 @@ public class ListaDonantes {
 //            System.out.println(donante);
 //        }
 //    }
-    public static List<Donante> LeerJSon() throws IOException {
-        ObjectMapper mapeador = new ObjectMapper();
-
-        listaDonantes = mapeador.readValue(new File("donantes.json"),
-                mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
-
-        // Devolver solo los primeros 25 registros
-        return listaDonantes.subList(0, Math.min(25, listaDonantes.size()));
+    
+    
+//    public List<Donante> LeerJSon() throws IOException {
+//        ObjectMapper mapeador = new ObjectMapper();
+//
+//        listaDonantes = mapeador.readValue(new File("donantes.json"),
+//                mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
+//
+//        // Devolver solo los primeros 25 registros
+//        return listaDonantes.subList(0, Math.min(25, listaDonantes.size()));
+//    }
+    
+    
+    
+    
+    public static  ArrayList<Donante> leerJSon() throws IOException{
+            ObjectMapper mapeador = new ObjectMapper();
+       
+       
+        ArrayList<Donante> catalogo = mapeador.readValue(new File("donantes.json"),
+                    mapeador.getTypeFactory().
+                constructCollectionType
+        (ArrayList.class, Donante.class));
+       
+        ArrayList<Donante> devolver = new ArrayList<Donante>(catalogo.stream().limit(25).toList());
+        return devolver;      
     }
+    
 
 }

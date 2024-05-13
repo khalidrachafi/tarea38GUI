@@ -5,10 +5,12 @@
 package vistas;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import modelos.Donante;
 import modelos.ModeloTablaDonante;
 import modelos.ListaDonantes;
 
@@ -32,7 +34,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Este método inserta los datos de la lista en el jtable
-    private void cargarDatosJTable() {
+    private void cargarDatosJTable() throws IOException {
 
         // Se crea el modelo de datos que contendrá el JTable
         // Este modelo se rellena de datos y luego se asocia al JTable
@@ -63,7 +65,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // Método para obtener la lista de personas cargada en el formulario
     // desde el diálogo
     public ListaDonantes getListaDonantes() {
-        return this.listaDonantes;
+        return listaDonantes;
     }
 
     // Método para obtener el jtable del formulario
@@ -107,13 +109,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -125,30 +124,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnEditar)
-                            .addComponent(btnSalir))))
-                .addContainerGap(355, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(193, 193, 193))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
+                        .addGap(139, 139, 139)
                         .addComponent(btnEditar)
-                        .addGap(37, 37, 37)
+                        .addGap(52, 52, 52)
                         .addComponent(btnSalir))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel1)
                         .addGap(42, 42, 42)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,11 +160,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if (jTable1.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "No has seleccionado ningún registro");
         } else {
-            // Muestro la ventana de edición
-            new Editar(this, true).setVisible(true);
-            // Una vez termine la ejecución de la ventana Editar
-            // Llamo a cargar de nuevo los datos en el jTable con los cambios
-            cargarDatosJTable();
+            try {
+                // Muestro la ventana de edición
+                new Editar(this, true).setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                // Una vez termine la ejecución de la ventana Editar
+                // Llamo a cargar de nuevo los datos en el jTable con los cambios
+                cargarDatosJTable();
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
