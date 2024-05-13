@@ -47,12 +47,12 @@ public class Editar extends javax.swing.JDialog {
         nombretxt.setText(this.donante.getNombre());
 
         // Obtener la fecha de nacimiento del donante
-        //LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
+        LocalDate fechaNacimiento = this.donante.getFechaNacimiento();
         // Convertir la fecha de nacimiento a un String con el formato dia/mes/año dado que es el dato que mostraremos
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-       // String fechaNacimientoTexto = fechaNacimiento.format(formatter);
+       String fechaNacimientoTexto = fechaNacimiento.format(formatter);
         // Establecer el texto en el JTextField
-       // fechatxt.setText(fechaNacimientoTexto);
+        fechatxt.setText(fechaNacimientoTexto);
         grupotxt.setText(this.donante.getGrupoSanguineo());
         rhtxt.setText(this.donante.getRh());
 
@@ -204,7 +204,7 @@ public class Editar extends javax.swing.JDialog {
         // Convertir el String en un objeto LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
         LocalDate fechaNacimiento = LocalDate.parse(fechaTexto, formatter);
-       // this.donante.setFechaNacimiento(fechaNacimiento);
+  //this.donante.setFechaNacimiento(fechaNacimiento);
         this.donante.setGrupoSanguineo(grupotxt.getText());
         this.donante.setRh(rhtxt.getText());
         String numeroDonacionesTexto = donacionestxt.getText();

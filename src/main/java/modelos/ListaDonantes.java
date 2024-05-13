@@ -1,7 +1,6 @@
 package modelos;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystemException;
@@ -31,36 +30,7 @@ public class ListaDonantes {
                 .findFirst()
                 .get();
     }
-
-//    public static void LeerJSon() throws IOException {
-//        ObjectMapper mapeador = new ObjectMapper();
-//        mapeador.registerModule(new JavaTimeModule());
-//
-//        listaDonantes = mapeador.readValue(new File("donantes.json"),
-//                mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
-//        System.out.println("---- Donantes ----");
-//
-//        // Leer solo los primeros 25 registros
-//        List<Donante> primeros25Donantes = listaDonantes.subList(0, Math.min(25, listaDonantes.size()));
-//        
-//        for (Donante donante : primeros25Donantes) {
-//            System.out.println(donante);
-//        }
-//    }
-    
-    
-//    public List<Donante> LeerJSon() throws IOException {
-//        ObjectMapper mapeador = new ObjectMapper();
-//
-//        listaDonantes = mapeador.readValue(new File("donantes.json"),
-//                mapeador.getTypeFactory().constructCollectionType(ArrayList.class, Donante.class));
-//
-//        // Devolver solo los primeros 25 registros
-//        return listaDonantes.subList(0, Math.min(25, listaDonantes.size()));
-//    }
-    
-    
-    
+      
     
     public static  ArrayList<Donante> leerJSon() throws IOException{
             ObjectMapper mapeador = new ObjectMapper();

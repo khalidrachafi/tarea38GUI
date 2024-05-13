@@ -100,15 +100,16 @@ public class Donante {
     }
 
     @JsonProperty("fechaNacimiento")
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
-                //LocalDate.parse(this.fechaNacimiento, DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+    public LocalDate getFechaNacimiento() {
+        return 
+                LocalDate.parse(this.fechaNacimiento, DateTimeFormatter.ofPattern("MM/dd/uuuu"));
     }
 
 //    @JsonProperty("fechaNacimiento")
-//    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-//        // Convertir la fecha al formato MM/dd/uuuu
-//        String fechaFormateada = fechaNacimiento.format(DateTimeFormatter.ofPattern("MM/dd/uuuu"));
+//    public void setFechaNacimiento(LocalDate fechaNueva) {
+//        // Convertir la fecha al formato dd/MM/uuuu
+//        String fechaFormateada = String.valueOf(fechaNueva.getYear());
+//                //.format(DateTimeFormatter.ofPattern("uuuu/MM/dd"));
 //        // Asignar la fecha formateada como un String
 //        this.fechaNacimiento = fechaFormateada;
 //    }
